@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ESP32-C6 Serial Monitor</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: 'Courier New', monospace; background: #1a1a1a; color: #00ff41; padding: 20px; }
+        #terminal { background: #000; border: 1px solid #333; height: 500px; overflow-y: scroll; padding: 15px; border-radius: 5px; box-shadow: 0 0 20px rgba(0,255,65,0.2); }
+        .log-entry { margin-bottom: 5px; border-bottom: 1px solid #111; }
+        .status-bar { margin-bottom: 10px; font-size: 0.9em; color: #888; }
+    </style>
+</head>
+<body>
+    <div class="status-bar">Status: <span id="status">Connecting...</span> | ESP32-C6 Real-time Monitor</div>
+    <div id="terminal"></div>
+    <script>
+        var gateway = `ws://${window.location.hostname}:81`;
+        var websocket;
+        function initWS() {
+            websocket = new WebSocket(gateway);
+            websocket.onopen = () => { document.getElementById('status').innerText = 'Online'; document.getElementById('status').style.color = '#00ff41'; };
+            websocket.onclose = () => { document.getElementById('status').innerText = 'Offline'; setTimeout(initWS, 2000); };
+            websocket.onmessage = (e) => {
+                const term = document.getElementById('terminal');
+                term.innerHTML += `<div class="log-entry">${e.data}</div>`;
+                term.scrollTop = term.scrollHeight;
+            };
+        }
+        window.onload = initWS;
+    </script>
+</body>
+</html>

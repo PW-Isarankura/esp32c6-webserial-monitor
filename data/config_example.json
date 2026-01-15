@@ -1,0 +1,5 @@
+{
+  "wifi_ssid": "Your_WiFi_SSID",
+  "wifi_password": "your_wifi_password",
+  "port": 80
+}

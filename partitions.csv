@@ -1,0 +1,6 @@
+#Name,   Type, SubType, Offset,  Size, Flags
+nvs,      data, nvs,      ,       0x5000,
+otadata,  data, ota,      ,       0x2000,
+factory,  app,  factory,  ,       4M,
+ota_0,    app,  ota_0,    ,       4M,
+storage,  data, littlefs, 0x810000, 7M,
